@@ -1,0 +1,44 @@
+<nav class="navbar navbar-default container-fluid">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-top" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand brand-text" href="{{path('homepage')}}">Iulia Albota</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-top">
+            <ul class="nav navbar-nav">
+                {% for nav in navs %}
+                    {% if nav.navigationitem is aninstanceof('AppBundle\\Entity\\Navigationlinks') %}
+                        <li><a href="{{ path('group_title',{'groupid':nav.navigationitem.x,'groupt':nav.navigationitem.url|makeLink}) }}">{{nav.navigationitem.title}}</a></li>
+                        {% elseif nav.navigationitem is aninstanceof('AppBundle\\Entity\\Navigationdropdowns') %}
+                        <li class="dropdown"> 
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                {{nav.navigationitem.title}}
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% for dropdownlink in nav.navigationitem.dropdownlinklist %}
+                                    <li><a href="{{path('group_subgroup',{'groupid':dropdownlink.navigationlink.x,'groupt':dropdownlink.navigationdropdown.url|makeLink,'subgroupt':dropdownlink.navigationlink.url|makeLink})}}">{{dropdownlink.navigationlink.title}}</a></li>
+                                {% endfor%}
+                            </ul>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if not is_granted('ROLE_USER') %}
+                <li><a href="{{path('fos_user_security_login')}}">Login</a></li>
+                <li><a href="{{path('fos_user_registration_register')}}">Register</a></li>
+                {% else %}
+                <li><a href="{{path('user_profile_name',{'profileid':app.user.id,'profilename':app.user.username|makeLink})}}">{{app.user.username}}</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

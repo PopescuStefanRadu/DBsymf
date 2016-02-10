@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/public/css/jquery-ui.css')}}"/>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="container">
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{asset('assets/public/js/jquery-ui.js')}}"></script>
+    <script src="{{asset(js)}}"></script>
+{% endblock %}

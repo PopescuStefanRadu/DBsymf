@@ -1,0 +1,36 @@
+<div class="container main">
+    <div class="row">
+        <div class="col-sm-9">
+            <div class="blog-main">
+                {% for post in posts %}
+                    {% if post is aninstanceof('AppBundle\\Entity\\Threads') %}
+                        {{include('default/thread.html.twig', { 'post': post })}}
+                    {% elseif post is aninstanceof('AppBundle\\Entity\\Imagegalleries')%}    
+                        {{include('default/gallery.html.twig', {'post':post})}}
+                    {% endif %}
+                {% endfor%}
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="blog-sidebar">
+                {% if is_granted('ROLE_AUTHOR')%}
+                    <div class="sidebar-module sidebar-module-inset">
+                        <a class="btn btn-default btn-block" href="{{path('add_thread')}}">Posteaza un thread</a>
+                        <a class="btn btn-default btn-block" href="">Posteaza o galerie</a>
+                    </div>
+                {% endif %}
+                <div class="sidebar-module sidebar-module-inset">
+                    <h4>Siteuri asociate</h4>
+                    <ol class="list-unstyled">
+                        <li><a href="https://www.facebook.com/iulia.drache">Facebook Iulia Albota</a></li>
+                        <li><a href="https://www.facebook.com/Sec%C8%9Bia-14-grup-literar-996081047120103/">Facebook Sectia 14</a></li>
+                    </ol>
+                </div>
+                <div class="sidebar-module sidebar-module-inset">
+                    <h4>Tags</h4>
+                    {{ render(controller('AppBundle:Default:showTagList')) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

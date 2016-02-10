@@ -1,0 +1,34 @@
+@import url(https://fonts.googleapis.com/css?family=Great+Vibes&subset=latin,latin-ext);
+
+a,a:hover,a:focus {
+    color:green;
+}
+
+
+.dropdown-menu li > a:hover, .dropdown-menu li > a:focus, .dropdown-submenu:hover > a {
+    background-color: green;
+}
+
+.brand-img{
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+
+
+body{
+    background-color: #212121;
+}
+
+.main{
+    background-color:black;
+}
+
+.navbar{
+    margin-bottom: 0px;
+}
+
+.brand-text{
+font-family: 'Great Vibes', cursive;
+font-size: 250%;
+}

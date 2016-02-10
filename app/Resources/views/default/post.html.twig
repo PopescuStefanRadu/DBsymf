@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/public/css/blog.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendor/blueimp/css/blueimp-gallery.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendor/blueimp/css/bootstrap-image-gallery.css') }}"/>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    {% for post in posts %}
+        {% if post is aninstanceof('AppBundle\\Entity\\Threads') %}
+            <div class="container main">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="blog-main">
+                            <div class="blog-post">
+                                <h2 class="blog-post-title">
+                                    <a href="{{path('post_title',{'pid':post.x,'ptitle':post.title|makeLink})}}">
+                                        {{post.title}}</a>
+                                </h2>
+                                <p class="blog-post-meta">
+                                    {{post.dateTime|date('d/m/Y H:i')}} by <a href="{{path('user_profile_name',{'profileid':post.user.id,'profilename':post.user.username})}}">
+                                        {{post.user.username}}
+                                    </a>
+                                    <br>
+                                    {% for posttag in post.postTagsList %}
+                                        <a href="{{path('tags_name',{'tagid':posttag.tag.x,'tagname':posttag.tag.title|makeLink})}}"><span class="tag">{{ posttag.tag.title }}</span></a>
+                                        {% endfor %}
+                                </p>
+                                {{post.content|parsedown}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="blog-sidebar">
+                            {% if is_granted('ROLE_AUTHOR')%}
+                                <div class="sidebar-module sidebar-module-inset">
+                                    <a class="btn btn-default btn-block" href="{{path('add_thread')}}">Posteaza un thread</a>
+                                    <a class="btn btn-default btn-block" href="">Posteaza o galerie</a>
+                                </div>
+                            {% endif %}
+                            <div class="sidebar-module sidebar-module-inset">
+                                <h4>Siteuri asociate</h4>
+                                <ol class="list-unstyled">
+                                    <li><a href="https://www.facebook.com/iulia.drache">Facebook Iulia Albota</a></li>
+                                    <li><a href="https://www.facebook.com/Sec%C8%9Bia-14-grup-literar-996081047120103/">Facebook Sectia 14</a></li>
+                                </ol>
+                            </div>
+                            <div class="sidebar-module sidebar-module-inset">
+                                <h4>Tags</h4>
+                                {{ render(controller('AppBundle:Default:showTagList')) }}
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+            {% elseif post is aninstanceof('AppBundle\\Entity\\Imagegalleries')%}    
+                Gallery
+            {% endif %}
+        {% endfor %}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('assets/vendor/blueimp/js/blueimp-gallery.js') }}"></script>
+        <script src="{{ asset('assets/vendor/blueimp/js/bootstrap-image-gallery.js') }}"></script>
+    {% endblock %}

@@ -1,0 +1,16 @@
+<div class="blog-post">
+    <h2 class="blog-post-title">
+        <a href="{{path('post_title',{'pid':post.x,'ptitle':post.title|makeLink})}}">
+            {{post.title}}</a>
+    </h2>
+    <p class="blog-post-meta">{{post.dateTime|date('d/m/Y H:i')}} by <a href="{{path('user_profile_name',{'profileid':post.user.id,'profilename':post.user.username})}}">
+            {{post.user.username}}
+        </a><br>
+        {% for posttag in post.postTagsList %}
+            <a href="{{path('tags_name',{'tagid':posttag.tag.x,'tagname':posttag.tag.title|makeLink})}}"><span class="tag">{{ posttag.tag.title }}</span></a>
+        {% endfor %}
+    </p>
+
+    {{post.content|firstParagraph|parsedown}}
+</div>
+<hr>

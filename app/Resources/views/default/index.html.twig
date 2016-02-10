@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/public/css/blog.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendor/blueimp/css/blueimp-gallery.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/vendor/blueimp/css/bootstrap-image-gallery.css') }}"/>
+{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    {{include('default/posts.html.twig', { 'posts': posts })}}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/vendor/blueimp/js/blueimp-gallery.js') }}"></script>
+    <script src="{{ asset('assets/vendor/blueimp/js/bootstrap-image-gallery.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,5 @@
+<ol class="list-unstyled">
+    {% for tag in tags %}
+        <li><a href="{{path('tags_name',{'tagid':tag.x,'tagname':tag.title|makeLink})}}">{{ tag.title }}</a></li>
+    {% endfor %}
+</ol>
