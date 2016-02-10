@@ -357,7 +357,20 @@ class DefaultController extends Controller {
         $qu = $em->createQuery('SELECT post FROM AppBundle:Posts post WHERE post.x=:postid')
                 ->setParameter(':postid', $postid);
         $posts = $qu->getResult();
+        
+        
+        //$qu3=$em->createQuery('SELECT comcom FROM AppBundle:CommentComments comcom JOIN AppBundle:Comments com WITH comcom.comment=com JOIN AppBundle:PostsComments postcom WITH postcom.comment=com JOIN AppBundle:Posts post WITH postcom.post=post WHERE post.x=:postid ORDER BY com.x')->setParameter(':postid',$postid);
+        //AND comcom.commentparent IS NULL
+        //
+        
+        
         return $this->render('default/post.html.twig', array('posts' => $posts));
     }
-
+    
+    public function showCommentAction(){
+        $em=$this->getDoctrine()->getManager();
+        $qu=$em->createQuery('SELECT com FROM AppBundle:Comments com');
+        $comcom=$qu->getResult();
+        return $this->render('partials/comments.html.twig',array('comments'=>$comcom));
+    }
 }

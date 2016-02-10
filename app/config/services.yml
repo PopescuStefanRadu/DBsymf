@@ -13,11 +13,6 @@ services:
         public: false
         tags:
             - { name: twig.extension }
-    app.twig_extension.comment:
-        class: AppBundle\Twig\CommentExtension
-        public: false
-        tags:
-            - { name: twig.extension }
     app.twig_extension.firstparagraph:
         class: AppBundle\Twig\FirstParagraphExtension
         public: false
@@ -30,6 +25,11 @@ services:
             - { name: twig.extension }
     app.twig_extension.parsedown:
         class: AppBundle\Twig\ParsedownExtension
+        public: false
+        tags:
+            - { name: twig.extension }
+    app.twig_extension.arrayRemove:
+        class: AppBundle\Twig\ArrayRemoveExtension
         public: false
         tags:
             - { name: twig.extension } 
