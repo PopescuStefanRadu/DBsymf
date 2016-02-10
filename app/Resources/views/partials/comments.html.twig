@@ -1,0 +1,25 @@
+{% import 'macros/commentbuilder.html.twig' as commentbuilder %}
+<ul class="media-list">
+    {% for comment in comments %}
+        {% if comment.parentcomment is null %}
+
+            <li class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object">
+                    </a>
+                </div>
+                
+                <div class="media-body">
+                    <p class="media-heading">{{ comment.user.username }}</p>
+                    <p>{{comment.content}}</p>
+                </div>
+
+            </li>
+            {% if comment.childcomment is not null %}
+                <ul>{{ commentbuilder.comments(comment) }}</ul>
+            {% endif %}
+
+        {% endif %}
+    {% endfor %}
+</ul>

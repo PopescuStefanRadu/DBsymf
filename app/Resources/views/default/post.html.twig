@@ -57,6 +57,7 @@
             {% elseif post is aninstanceof('AppBundle\\Entity\\Imagegalleries')%}    
                 Gallery
             {% endif %}
+            {{render(controller('AppBundle:Default:showComment'))}}
         {% endfor %}
     {% endblock %}
 
