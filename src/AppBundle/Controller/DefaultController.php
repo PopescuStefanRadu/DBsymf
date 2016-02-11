@@ -67,8 +67,8 @@ class DefaultController extends Controller {
      *      "pid": "\d+"
      * })
      */
-    public function showGrouppostAction($groupid = null, $groupt = null, $pid, $ptitle = null) {
-        return $this->showPost($groupid, $groupt, null, $pid);
+    public function showGrouppostAction(Request $request,$groupid = null, $groupt = null, $pid, $ptitle = null) {
+        return $this->showPost($request,$groupid, $groupt, null, $pid);
     }
 
     /**
@@ -81,8 +81,8 @@ class DefaultController extends Controller {
      *      "pid": "\d+"
      * })
      */
-    public function showSubgrouppostAction($groupid, $groupt, $subgroupt, $pid, $ptitle = null) {
-        return $this->showPost($groupid, $groupt, $subgroupt, $pid);
+    public function showSubgrouppostAction(Request $request,$groupid, $groupt, $subgroupt, $pid, $ptitle = null) {
+        return $this->showPost($request,$groupid, $groupt, $subgroupt, $pid);
     }
 
     /**
@@ -352,25 +352,21 @@ class DefaultController extends Controller {
         return $this->render('default/index.html.twig', array('posts' => $postsingroup));
     }
 
-    private function showPost($groupid, $group, $subgroup, $postid) {
+    private function showPost($request,$groupid, $group, $subgroup, $postid) {
         $em = $this->getDoctrine()->getManager();
         $qu = $em->createQuery('SELECT post FROM AppBundle:Posts post WHERE post.x=:postid')
                 ->setParameter(':postid', $postid);
         $posts = $qu->getResult();
-        
-        
-        //$qu3=$em->createQuery('SELECT comcom FROM AppBundle:CommentComments comcom JOIN AppBundle:Comments com WITH comcom.comment=com JOIN AppBundle:PostsComments postcom WITH postcom.comment=com JOIN AppBundle:Posts post WITH postcom.post=post WHERE post.x=:postid ORDER BY com.x')->setParameter(':postid',$postid);
-        //AND comcom.commentparent IS NULL
-        //
-        
-        
-        return $this->render('default/post.html.twig', array('posts' => $posts));
+        $request=$request->getPathInfo();
+                
+        return $this->render('default/post.html.twig', array('posts' => $posts,'request'=>$request));
     }
     
     public function showCommentAction(){
         $em=$this->getDoctrine()->getManager();
         $qu=$em->createQuery('SELECT com FROM AppBundle:Comments com');
         $comcom=$qu->getResult();
+        $comcom=array();
         return $this->render('partials/comments.html.twig',array('comments'=>$comcom));
     }
 }

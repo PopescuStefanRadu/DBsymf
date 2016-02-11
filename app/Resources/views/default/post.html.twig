@@ -8,6 +8,17 @@
 
 {% block body %}
     {{ parent() }}
+    <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id))
+                return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=536188383204913";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
     {% for post in posts %}
         {% if post is aninstanceof('AppBundle\\Entity\\Threads') %}
             <div class="container main">
@@ -58,6 +69,11 @@
                 Gallery
             {% endif %}
             {{render(controller('AppBundle:Default:showComment'))}}
+            <div class="col-sm-9">
+                <div class="center-block" style="width:750px;">
+                    <div class="fb-comments" data-href="{{url('homepage')}}{{request}}" data-width="750" data-numposts="10"></div>
+                </div>
+            </div>
         {% endfor %}
     {% endblock %}
 
